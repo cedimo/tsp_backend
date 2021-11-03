@@ -1,4 +1,4 @@
-# TSP Frontend
+# TSP Backend
 
 Um effizient zu arbeiten, wird nicht das komplette Venv geteilt. Die benötigten Bibliotheken werden in der [requirements.txt](requirements.txt) 
 Datei gespeichert.
