@@ -1,5 +1,6 @@
 from fastapi import Request, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import json
 
 app = FastAPI()
 
@@ -18,8 +19,12 @@ app.add_middleware(
 
 @app.post("/")
 async def test(request: Request):
-    x = await request.json()
+    data = await request.json()
+    data = json.dumps(data)
+    data = json.loads(data)
 
-    # TODO
+    # array with all coordinates
+    # Format: Longitude, Latitude
+    coords = data['coords']
 
-    return x
+    return coords
