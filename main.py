@@ -1,6 +1,5 @@
 from fastapi import Request, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import json
 from fastapi.params import Body
 import requests
 
@@ -35,9 +34,10 @@ async def test(request: Request):
         }
         # replace double quotes
         data = str(frontend_data).replace("\'", "\"")
+        
         matrix = requests.post(url, data=data, headers=headers)
+        return matrix.json()
 
     except:
-        print('OpenRouteService Error occured')
+        return 'OpenRouteService Error occured'
 
-    return matrix.json()
