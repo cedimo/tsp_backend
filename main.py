@@ -1,6 +1,10 @@
 from fastapi import Request, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import json
+from fastapi.params import Body
+import requests
+
+from config import ors_key
 
 app = FastAPI()
 
@@ -19,12 +23,21 @@ app.add_middleware(
 
 @app.post("/")
 async def test(request: Request):
-    data = await request.json()
-    data = json.dumps(data)
-    data = json.loads(data)
+    frontend_data = await request.json()
 
-    # array with all coordinates
-    # Format: Longitude, Latitude
-    coords = data['coords']
+    try:
+        # ACHTUNG: Alle JSON Objekte für OpenRouteService Aufrufe müssen " statt ' enthalten
+        url = 'https://api.openrouteservice.org/v2/matrix/foot-walking'
+        headers = {
+            'Authorization': ors_key,
+            'Content-Type': 'application/json; charset=utf-8',
+            'Accept': 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8'
+        }
+        # replace double quotes
+        data = str(frontend_data).replace("\'", "\"")
+        matrix = requests.post(url, data=data, headers=headers)
 
-    return coords
+    except:
+        print('OpenRouteService Error occured')
+
+    return matrix.json()
