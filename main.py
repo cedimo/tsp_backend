@@ -1,8 +1,8 @@
 from fastapi import Request, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.params import Body
 import requests
 
+from optimization import optimize
 from config import ors_key
 
 app = FastAPI()
@@ -25,6 +25,7 @@ async def test(request: Request):
     frontend_data = await request.json()
 
     try:
+        # --------------- MATRIX API CALL ---------------
         # ACHTUNG: Alle JSON Objekte für OpenRouteService Aufrufe müssen " statt ' enthalten
         url = 'https://api.openrouteservice.org/v2/matrix/foot-walking'
         headers = {
@@ -36,8 +37,29 @@ async def test(request: Request):
         data = str(frontend_data).replace("\'", "\"")
         
         matrix = requests.post(url, data=data, headers=headers)
-        return matrix.json()
+        matrix = matrix.json()
+
+
+        # --------------- OPTIMIZATION ---------------
+        tour = optimize(matrix)
+
+
+        # --------------- DIRECTIONS API CALL ---------------
+        coordinates = []
+        for i in tour:
+            coordinates.append(matrix['destinations'][i]['location'])
+        
+        # add starting point as last point again
+        coordinates.append(matrix['destinations'][tour[0]]['location'])
+
+        coords_dict = dict.fromkeys(["coordinates"], coordinates)
+
+        url = 'https://api.openrouteservice.org/v2/directions/foot-walking/geojson'
+        data = str(coords_dict).replace("\'", "\"")
+
+        route = requests.post(url, data=data, headers=headers)
+
+        return route.json()
 
     except:
         return 'OpenRouteService Error occured'
-
