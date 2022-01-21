@@ -36,7 +36,7 @@ def subtour(edges):
 
 
 
-def optimize(matrix):
+def gurobi(matrix):
     durations = matrix["durations"]
     
     global n
@@ -67,10 +67,5 @@ def optimize(matrix):
 
     tour = subtour(selected)
     assert len(tour) == n
-
-    print('')
-    print('Optimal tour: %s' % str(tour))
-    print('Optimal cost: %g' % m.objVal)
-    print('')
 
     return tour

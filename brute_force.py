@@ -1,7 +1,7 @@
 from  itertools import permutations
 from turtle import st
 
-def force(matrix):
+def brute_force(matrix):
     durations = matrix["durations"]
     places_count = len(durations)
 
@@ -31,5 +31,5 @@ def force(matrix):
     for x in shortest_route:
         tour.append(x)
 
-    print("Brute Force Tour: "+str(tour))
+    # print("Brute Force Tour: "+str(tour))
     return tour
