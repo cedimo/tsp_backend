@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import requests
 
 from optimization import optimize
+from brute_force import force
 from config import ors_key
 
 app = FastAPI()
@@ -41,7 +42,10 @@ async def test(request: Request):
 
 
         # --------------- OPTIMIZATION ---------------
-        tour = optimize(matrix)
+        # must take matrix and return array with order of sights starting with 0
+
+        # tour = optimize(matrix)
+        tour = force(matrix)
 
 
         # --------------- DIRECTIONS API CALL ---------------
