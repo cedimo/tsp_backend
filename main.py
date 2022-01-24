@@ -1,8 +1,12 @@
+import os
+import sys
+from time import time
 from fastapi import Request, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 
-from optimization import optimize
+from gurobi_optimization import gurobi
+from brute_force import brute_force
 from config import ors_key
 
 app = FastAPI()
@@ -41,7 +45,10 @@ async def test(request: Request):
 
 
         # --------------- OPTIMIZATION ---------------
-        tour = optimize(matrix)
+        # must take matrix and return array with order of sights starting with 0
+
+        tour = solve(gurobi, matrix)
+        tour = solve(brute_force, matrix)
 
 
         # --------------- DIRECTIONS API CALL ---------------
@@ -63,3 +70,23 @@ async def test(request: Request):
 
     except:
         return 'OpenRouteService Error occured'
+
+
+def solve(algorithm, matrix):
+    # block print (because of gurobi)
+    sys.stdout = open(os.devnull, 'w')
+
+    start = time()
+    tour = algorithm(matrix)
+    end = time()
+
+    # enable print
+    sys.stdout = sys.__stdout__
+
+    print("")
+    print("----- "+str(algorithm.__name__)+" -----")
+    print("duration: "+str(end-start)+"s")
+    print("tour: "+str(tour))
+    print("")
+
+    return tour
