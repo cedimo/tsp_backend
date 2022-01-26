@@ -36,7 +36,7 @@ def subtour(edges):
 
 
 
-def gurobi(matrix):
+def optimize(matrix):
     durations = matrix["durations"]
     
     global n
