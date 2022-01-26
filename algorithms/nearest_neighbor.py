@@ -1,4 +1,4 @@
-def neighbor(matrix):
+def optimize(matrix):
     durations = matrix["durations"]
 
     tour = [0]

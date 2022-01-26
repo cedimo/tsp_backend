@@ -1,6 +1,6 @@
 from  itertools import permutations
 
-def brute_force(matrix):
+def optimize(matrix):
     durations = matrix["durations"]
     places_count = len(durations)
 
