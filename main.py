@@ -7,6 +7,8 @@ import requests
 
 from gurobi_optimization import gurobi
 from brute_force import brute_force
+from nearest_neighbor import neighbor
+
 from config import ors_key
 
 app = FastAPI()
@@ -48,7 +50,8 @@ async def test(request: Request):
         # must take matrix and return array with order of sights starting with 0
 
         tour = solve(gurobi, matrix)
-        tour = solve(brute_force, matrix)
+        solve(brute_force, matrix)
+        solve(neighbor, matrix)
 
 
         # --------------- DIRECTIONS API CALL ---------------
