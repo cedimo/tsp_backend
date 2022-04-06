@@ -23,3 +23,15 @@ Form der [requirements.txt](requirements.txt) Datei:
 
 ## Deployment auf neuem Server (venv erstellen und Bibliotheken installieren)
     virtualenv --no-site-packages --distribute .env && source .env/bin/activate && pip install -r requirements.txt
+
+## Docker
+
+### Build image
+```
+docker build -t username/tsp-backend .
+```
+
+### Run image
+```
+docker run -it -p 8000:8000 -d --name tsp-backend username/tsp-backend
+```

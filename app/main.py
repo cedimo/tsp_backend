@@ -1,9 +1,8 @@
 from fastapi import Request, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from helpers import openrouteservice, console_output
-from algorithms import gurobi, brute_force, nearest_neighbor
-
+from app.helpers import console_output, openrouteservice
+from app.algorithms import gurobi, brute_force, nearest_neighbor
 
 app = FastAPI()
 
