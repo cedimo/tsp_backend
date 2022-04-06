@@ -7,9 +7,10 @@ from algorithms import gurobi, brute_force, nearest_neighbor
 
 app = FastAPI()
 
-# origins from which API calls are allowed
+# origins from which API calls are allowed (port 8080 for devmode, 80 for prodmode)
 origins = [
     "http://localhost:8080",
+    "http://localhost",
 ]
 app.add_middleware(
     CORSMiddleware,
