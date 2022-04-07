@@ -1,6 +1,7 @@
 import requests
+import os
 
-from config import ors_key
+ors_key = os.getenv('ORS_KEY')
 
 headers = {
         'Authorization': ors_key,

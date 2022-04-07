@@ -3,7 +3,10 @@
 ## ACHTUNG: Alle OpenRouteService Calls benötigen `"` statt `'`
 
 ## Credentials
-Alle sensiblen Daten werden in einer `config.py` Datei abgelegt und in der Anwendung importiert und verwendet (keine Datenzuweisung). Diese Datei wird nicht geteilt und nur lokal angelegt.
+Das Backend greift auf eine Schnittstelle von Openrouteservice zu, welche einen API-Key benötigt.
+Ein gültiger API-Key kann über https://openrouteservice.org/ bezogen und muss als Environment-Variable mit dem Namen ORS_KEY gesetzt werden.
+
+Der Key wird innerhalb des Backends ausschließlich für Requests an die Schnittstelle von Openrouteservice verwendet und nicht gespeichert.
 
 ## Bibliotheken
 Um effizient zu arbeiten, wird nicht das komplette Venv geteilt. Die benötigten Bibliotheken werden in der [requirements.txt](requirements.txt) 
@@ -23,3 +26,16 @@ Form der [requirements.txt](requirements.txt) Datei:
 
 ## Deployment auf neuem Server (venv erstellen und Bibliotheken installieren)
     virtualenv --no-site-packages --distribute .env && source .env/bin/activate && pip install -r requirements.txt
+
+## Docker
+
+### Build image
+```
+docker build -t username/tsp-backend .
+```
+
+### Run image
+<ORS_KEY> is the API Key for Openrouteservice
+```
+docker run -it -p 8000:8000 -d --name tsp-backend -e ORS_KEY='<ORS_KEY>' username/tsp-backend
+```

@@ -1,15 +1,15 @@
 from fastapi import Request, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from helpers import openrouteservice, console_output
-from algorithms import gurobi, brute_force, nearest_neighbor
-
+from app.helpers import console_output, openrouteservice
+from app.algorithms import gurobi, brute_force, nearest_neighbor
 
 app = FastAPI()
 
-# origins from which API calls are allowed
+# origins from which API calls are allowed (port 8080 for devmode, 80 for prodmode)
 origins = [
     "http://localhost:8080",
+    "http://localhost",
 ]
 app.add_middleware(
     CORSMiddleware,
