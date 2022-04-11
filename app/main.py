@@ -21,7 +21,7 @@ app.add_middleware(
 
 
 @app.post("/")
-async def test(request: Request):
+async def getRoute(request: Request):
     frontend_data = await request.json()
 
     try:
