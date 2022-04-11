@@ -24,6 +24,11 @@ app.add_middleware(
 async def getRoute(request: Request):
     frontend_data = await request.json()
 
+    # check if call comes from dev server
+    PROD_MODE = True
+    if request.headers.get("origin") == "http://localhost:8080":
+        PROD_MODE = False
+
     try:
         matrix = openrouteservice.getMatrix(frontend_data)
     except:
@@ -37,7 +42,11 @@ async def getRoute(request: Request):
 
     # ! function in algorithm must be named optimize(matrix)
 
-    tour = console_output.solve(matrix, gurobi, brute_force, nearest_neighbor)
+    # production only optiomizes using Gurobi
+    if PROD_MODE:
+        tour = console_output.solve(matrix, gurobi)
+    else:
+        tour = console_output.solve(matrix, gurobi, brute_force, nearest_neighbor)
 
 
     try:
