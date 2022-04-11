@@ -1,6 +1,7 @@
 import os
 import sys
 from time import time
+from app.helpers.openrouteservice import getRoute
 
 def solve(matrix, algorithm, *optional_algorithms):
     for x in optional_algorithms:
@@ -17,15 +18,21 @@ def solve_and_print(matrix, algorithm, shown=False):
     tour = algorithm.optimize(matrix)
     end = time()
 
+    route = getRoute(matrix, tour)
+    x = route.json()['features'][0]['properties']['summary']
+    distance = round(x['distance'])
+    duration = round(x['duration']/60)
+
     # enable print
     sys.stdout = sys.__stdout__
 
-    print("")
     if shown:
         print("SHOWN IN FRONTEND")
-    print("----- " + str(algorithm.__name__) +" -----")
-    print("duration: " + str(end-start) + "s")
-    print("tour: " + str(tour))
+    print(f"----- {algorithm.__name__} -----")
+    print(f"calculation duration: {end-start} s")
+    print(f"tour: {tour}")
+    print(f"tour distance: {distance} m")
+    print(f"tour duration: {duration} min")
     print("")
 
     return tour

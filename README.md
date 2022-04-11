@@ -22,7 +22,7 @@ Form der [requirements.txt](requirements.txt) Datei:
     pip install -r requirements.txt
 
 ## Starten des Servers
-    uvicorn main:app --reload
+    uvicorn app.main:app --reload
 
 ## Deployment auf neuem Server (venv erstellen und Bibliotheken installieren)
     virtualenv --no-site-packages --distribute .env && source .env/bin/activate && pip install -r requirements.txt

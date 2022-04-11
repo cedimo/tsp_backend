@@ -3,6 +3,9 @@ import os
 
 ors_key = os.getenv('ORS_KEY')
 
+if ors_key is None:
+    raise Exception('No OpenRouteServiceKey found! See README.md for instructions')
+
 headers = {
         'Authorization': ors_key,
         'Content-Type': 'application/json; charset=utf-8',
