@@ -26,8 +26,11 @@ async def getRoute(request: Request):
 
     # check if call comes from dev server
     PROD_MODE = True
-    if request.headers.get("origin") == "http://localhost:8080":
-        PROD_MODE = False
+    try:
+        if request.headers.get("origin") == "http://localhost:8080":
+            PROD_MODE = False
+    except:
+        pass
 
     try:
         matrix = openrouteservice.getMatrix(frontend_data)
