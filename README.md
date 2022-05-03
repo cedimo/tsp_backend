@@ -1,10 +1,16 @@
 # TSP Backend
 
-## ACHTUNG: Alle OpenRouteService Calls benötigen `"` statt `'`
-
 ## Credentials
 Das Backend greift auf eine Schnittstelle von Openrouteservice zu, welche einen API-Key benötigt.
 Ein gültiger API-Key kann über https://openrouteservice.org/ bezogen und muss als Environment-Variable mit dem Namen ORS_KEY gesetzt werden.
+
+Windows:
+
+    $Env:ORS_KEY = '<ORS_KEY>'
+
+Linux & macOS:
+
+    export ORS_KEY = '<ORS_KEY>'
 
 Der Key wird innerhalb des Backends ausschließlich für Requests an die Schnittstelle von Openrouteservice verwendet und nicht gespeichert.
 
@@ -30,12 +36,12 @@ Form der [requirements.txt](requirements.txt) Datei:
 ## Docker
 
 ### Build image
-```
-docker build -t username/tsp-backend .
-```
+
+    docker build -t username/tsp-backend .
+
 
 ### Run image
 <ORS_KEY> is the API Key for Openrouteservice
-```
-docker run -it -p 8000:8000 -d --name tsp-backend -e ORS_KEY='<ORS_KEY>' username/tsp-backend
-```
+
+    docker run -it -p 8000:8000 -d --name tsp-backend -e ORS_KEY='<ORS_KEY>' username/tsp-backend
+
