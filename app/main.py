@@ -8,8 +8,9 @@ app = FastAPI()
 
 # origins from which API calls are allowed (port 8080 for devmode, 80 for prodmode)
 origins = [
-    "http://localhost:8080",
-    "http://localhost",
+    "http://localhost",                 # docker
+    "http://localhost:8080",            # local dev server
+    "http://192.168.178.43:8080",       # network dev server
 ]
 app.add_middleware(
     CORSMiddleware,
